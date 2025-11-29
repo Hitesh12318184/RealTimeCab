@@ -1,11 +1,15 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
+const driverRoutes = require("./routes/driver");
+
 
 dotenv.config();
 const app = express();
 
 app.use(express.json());
+app.use("/api/driver", driverRoutes);
+
 
 // ⛔ IMPORTANT — this loads your auth routes
 app.use("/api", require("./routes/auth"));
