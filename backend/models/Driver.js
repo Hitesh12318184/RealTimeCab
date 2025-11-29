@@ -1,19 +1,53 @@
 const mongoose = require("mongoose");
 
-const driverSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  phone: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
+const DriverSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+      trim: true,
+    },
 
-  vehicleType: { type: String, enum: ["SUV", "Sedan", "Mini", "Auto"], required: true },
-  vehicleNumber: { type: String, required: true },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+    },
 
-  status: { type: String, enum: ["online", "offline"], default: "offline" },
+    password: {
+      type: String,
+      required: true,
+    },
 
-  location: {
-    lat: { type: Number, default: 0 },
-    lng: { type: Number, default: 0 }
-  }
-});
+    vehicleNumber: {
+      type: String,
+      required: true,
+    },
 
-module.exports = mongoose.model("Driver", driverSchema);
+    carType: {
+      type: String,
+      enum: ["Sedan", "SUV", "Hatchback"], // only these 3 allowed
+      required: true,
+    },
+
+    location: {
+      lat: { type: Number, default: 0 },
+      lng: { type: Number, default: 0 },
+    },
+
+    status: {
+      type: String,
+      enum: ["available", "busy"],
+      default: "available",
+    },
+
+    currentRide: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Ride",
+      default: null,
+    },
+  },
+  { timestamps: true }
+);
+
+module.exports = mongoose.model("Driver", DriverSchema);

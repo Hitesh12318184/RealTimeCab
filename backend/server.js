@@ -3,20 +3,24 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const driverRoutes = require("./routes/driver");
 
-
 dotenv.config();
 const app = express();
 
 app.use(express.json());
+
+// DRIVER ROUTES
 app.use("/api/driver", driverRoutes);
 
-
-// ⛔ IMPORTANT — this loads your auth routes
+// AUTH ROUTES
 app.use("/api", require("./routes/auth"));
 
-mongoose.connect(process.env.MONGO_URI)
+// BOOKING ROUTES  ✅ IMPORTANT
+app.use("/api/bookings", require("./routes/booking"));
+
+mongoose
+  .connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB Connected"))
-  .catch(err => console.log(err));
+  .catch((err) => console.log(err));
 
 app.get("/", (req, res) => {
   res.send("RealtimeCab API Running...");
