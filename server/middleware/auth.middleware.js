@@ -1,0 +1,65 @@
+const jwt = require('jsonwebtoken');
+const User = require('../models/user.model');
+
+/**
+ * Middleware to verify JWT access token and authenticate user
+ */
+const authenticateUser = async (req, res, next) => {
+    try {
+        // Get token from header or cookie
+        const token = req.header('Authorization')?.replace('Bearer ', '') || req.cookies?.accessToken;
+
+        if (!token) {
+            return res.status(401).json({
+                success: false,
+                message: 'Access denied. No token provided.'
+            });
+        }
+
+        // Verify token
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+        // Find user
+        const user = await User.findById(decoded._id).select('-password -refreshToken');
+
+        if (!user) {
+            return res.status(401).json({
+                success: false,
+                message: 'Invalid token. User not found.'
+            });
+        }
+
+        if (!user.isActive) {
+            return res.status(403).json({
+                success: false,
+                message: 'Account is deactivated.'
+            });
+        }
+
+        // Attach user to request object
+        req.user = user;
+        next();
+    } catch (error) {
+        if (error.name === 'JsonWebTokenError') {
+            return res.status(401).json({
+                success: false,
+                message: 'Invalid token.'
+            });
+        }
+
+        if (error.name === 'TokenExpiredError') {
+            return res.status(401).json({
+                success: false,
+                message: 'Token expired. Please refresh your token.'
+            });
+        }
+
+        return res.status(500).json({
+            success: false,
+            message: 'Server error during authentication.',
+            error: error.message
+        });
+    }
+};
+
+module.exports = { authenticateUser };
