@@ -20,6 +20,11 @@ import BookingManagement from './pages/admin/BookingManagement';
 import OfferManagement from './pages/admin/OfferManagement';
 import UserManagement from './pages/admin/UserManagement';
 import BookingConfirmation from './pages/user/BookingConfirmation';
+import HelpCenter from './pages/HelpCenter';
+import FAQ from './pages/FAQ';
+import ContactUs from './pages/ContactUs';
+import RefundPolicy from './pages/RefundPolicy';
+import TermsAndConditions from './pages/TermsAndConditions';
 
 import './index.css';
 
@@ -59,6 +64,13 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
+
+              {/* Support pages */}
+              <Route path="/help" element={<HelpCenter />} />
+              <Route path="/faq" element={<FAQ />} />
+              <Route path="/contact" element={<ContactUs />} />
+              <Route path="/refund" element={<RefundPolicy />} />
+              <Route path="/terms" element={<TermsAndConditions />} />
 
               {/* User routes */}
               <Route

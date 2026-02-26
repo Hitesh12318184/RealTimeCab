@@ -84,6 +84,24 @@ const seedDatabase = async () => {
                 capacity: 50,
                 busType: 'ac',
             },
+            {
+                name: 'Premium Sedan',
+                vehicleNumber: 'DL05XY7890',
+                type: 'car',
+                brand: 'Honda',
+                model: 'Accord',
+                capacity: 4,
+                carType: 'sedan',
+            },
+            {
+                name: 'Luxury SUV',
+                vehicleNumber: 'MH06PQ4567',
+                type: 'car',
+                brand: 'Toyota',
+                model: 'Fortuner',
+                capacity: 7,
+                carType: 'suv',
+            },
         ]);
 
         // Create routes
@@ -94,7 +112,7 @@ const seedDatabase = async () => {
                 destination: 'Mumbai',
                 distance: 1450,
                 duration: '18 hours',
-                vehicle: vehicles[2]._id,
+                vehicle: vehicles[2]._id, // Bus
                 price: 1200,
                 schedule: {
                     departureTime: '20:00',
@@ -103,10 +121,22 @@ const seedDatabase = async () => {
             },
             {
                 source: 'Delhi',
+                destination: 'Mumbai',
+                distance: 1450,
+                duration: '20 hours',
+                vehicle: vehicles[4]._id, // Premium Sedan (car)
+                price: 3500,
+                schedule: {
+                    departureTime: '06:00',
+                    arrivalTime: '02:00',
+                },
+            },
+            {
+                source: 'Delhi',
                 destination: 'Jaipur',
                 distance: 280,
                 duration: '5 hours',
-                vehicle: vehicles[0]._id,
+                vehicle: vehicles[0]._id, // Luxury Sedan (car)
                 price: 800,
                 schedule: {
                     departureTime: '08:00',
@@ -118,7 +148,7 @@ const seedDatabase = async () => {
                 destination: 'Pune',
                 distance: 150,
                 duration: '3 hours',
-                vehicle: vehicles[1]._id,
+                vehicle: vehicles[1]._id, // SUV Express (car)
                 price: 500,
                 schedule: {
                     departureTime: '10:00',
@@ -130,7 +160,7 @@ const seedDatabase = async () => {
                 destination: 'Chennai',
                 distance: 350,
                 duration: '6 hours',
-                vehicle: vehicles[3]._id,
+                vehicle: vehicles[3]._id, // Bus
                 price: 600,
                 schedule: {
                     departureTime: '06:00',
@@ -138,11 +168,23 @@ const seedDatabase = async () => {
                 },
             },
             {
+                source: 'Bangalore',
+                destination: 'Chennai',
+                distance: 350,
+                duration: '5 hours',
+                vehicle: vehicles[5]._id, // Luxury SUV (car)
+                price: 1800,
+                schedule: {
+                    departureTime: '08:00',
+                    arrivalTime: '13:00',
+                },
+            },
+            {
                 source: 'Kolkata',
                 destination: 'Guwahati',
                 distance: 1000,
                 duration: '14 hours',
-                vehicle: vehicles[2]._id,
+                vehicle: vehicles[2]._id, // Bus
                 price: 1000,
                 schedule: {
                     departureTime: '18:00',

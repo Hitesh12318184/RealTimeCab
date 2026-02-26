@@ -6,7 +6,7 @@ const User = require('../models/user.model');
  */
 const authenticateUser = async (req, res, next) => {
     try {
-        // Get token from header or cookie
+        
         const token = req.header('Authorization')?.replace('Bearer ', '') || req.cookies?.accessToken;
 
         if (!token) {
@@ -16,10 +16,10 @@ const authenticateUser = async (req, res, next) => {
             });
         }
 
-        // Verify token
+       
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-        // Find user
+    
         const user = await User.findById(decoded._id).select('-password -refreshToken');
 
         if (!user) {
@@ -35,8 +35,6 @@ const authenticateUser = async (req, res, next) => {
                 message: 'Account is deactivated.'
             });
         }
-
-        // Attach user to request object
         req.user = user;
         next();
     } catch (error) {

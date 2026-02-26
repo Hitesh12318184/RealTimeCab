@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
 const scheduleSchema = new mongoose.Schema({
+    journeyDate: {
+        type: Date,
+        required: true
+    },
     departureTime: {
         type: String,
         required: true

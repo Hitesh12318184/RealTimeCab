@@ -16,6 +16,7 @@ const RouteManagement = () => {
         vehicle: '',
         price: '',
         schedule: {
+            journeyDate: new Date().toISOString().split('T')[0],
             departureTime: '08:00',
             arrivalTime: '12:00',
         },
@@ -82,6 +83,7 @@ const RouteManagement = () => {
             vehicle: '',
             price: '',
             schedule: {
+                journeyDate: new Date().toISOString().split('T')[0],
                 departureTime: '08:00',
                 arrivalTime: '12:00',
             },
@@ -123,6 +125,15 @@ const RouteManagement = () => {
                                         <span className="text-gray-500">Price:</span> <span className="font-semibold text-primary-600">₹{route.price}</span>
                                     </div>
                                 </div>
+                                {route.schedule?.journeyDate && (
+                                    <div className="mt-2 text-sm">
+                                        <span className="text-gray-500">Journey Date:</span> <span className="font-medium">{new Date(route.schedule.journeyDate).toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                                        <span className="mx-2">•</span>
+                                        <span className="text-gray-500">Departure:</span> <span className="font-medium">{route.schedule.departureTime}</span>
+                                        <span className="mx-2">•</span>
+                                        <span className="text-gray-500">Arrival:</span> <span className="font-medium">{route.schedule.arrivalTime}</span>
+                                    </div>
+                                )}
                             </div>
                             <div className="flex space-x-2 ml-4">
                                 <button
@@ -135,7 +146,11 @@ const RouteManagement = () => {
                                             duration: route.duration,
                                             vehicle: route.vehicle?._id,
                                             price: route.price,
-                                            schedule: route.schedule || { departureTime: '08:00', arrivalTime: '12:00' },
+                                            schedule: route.schedule || {
+                                                journeyDate: new Date().toISOString().split('T')[0],
+                                                departureTime: '08:00',
+                                                arrivalTime: '12:00'
+                                            },
                                         });
                                         setShowModal(true);
                                     }}
@@ -209,23 +224,35 @@ const RouteManagement = () => {
                                     className="input-field"
                                     required
                                 />
+                                <div>
+                                    <label className="block text-sm mb-1 text-gray-700 font-medium">Journey Date</label>
+                                    <input
+                                        type="date"
+                                        value={formData.schedule.journeyDate}
+                                        onChange={(e) => setFormData({ ...formData, schedule: { ...formData.schedule, journeyDate: e.target.value } })}
+                                        className="input-field"
+                                        required
+                                    />
+                                </div>
                                 <div className="grid grid-cols-2 gap-4">
                                     <div>
-                                        <label className="block text-sm mb-1">Departure</label>
+                                        <label className="block text-sm mb-1 text-gray-700 font-medium">Departure Time</label>
                                         <input
                                             type="time"
                                             value={formData.schedule.departureTime}
                                             onChange={(e) => setFormData({ ...formData, schedule: { ...formData.schedule, departureTime: e.target.value } })}
                                             className="input-field"
+                                            required
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-sm mb-1">Arrival</label>
+                                        <label className="block text-sm mb-1 text-gray-700 font-medium">Arrival Time</label>
                                         <input
                                             type="time"
                                             value={formData.schedule.arrivalTime}
                                             onChange={(e) => setFormData({ ...formData, schedule: { ...formData.schedule, arrivalTime: e.target.value } })}
                                             className="input-field"
+                                            required
                                         />
                                     </div>
                                 </div>

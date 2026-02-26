@@ -201,7 +201,7 @@ const SearchRides = () => {
                                 value={filters.destination}
                                 onChange={handleFilterChange}
                                 className="input-field"
-                                placeholder="e.g., Mumbai"
+                                placeholder="e.g., Punjab"
                                 required
                             />
                         </div>
@@ -247,6 +247,42 @@ const SearchRides = () => {
                                             <p className="text-sm text-gray-600">{route.vehicle.name}</p>
                                         </div>
                                     </div>
+
+                                    {/* Journey Date & Time */}
+                                    {route.schedule?.journeyDate && (
+                                        <div className="mb-4 p-3 bg-gradient-to-r from-primary-50 to-blue-50 rounded-lg border border-primary-200">
+                                            <div className="flex items-center gap-4 flex-wrap">
+                                                <div className="flex items-center gap-2">
+                                                    <span className="text-primary-600 font-medium">📅</span>
+                                                    <div>
+                                                        <p className="text-xs text-gray-600">Journey Date</p>
+                                                        <p className="font-semibold text-gray-900">
+                                                            {new Date(route.schedule.journeyDate).toLocaleDateString('en-IN', {
+                                                                weekday: 'short',
+                                                                year: 'numeric',
+                                                                month: 'short',
+                                                                day: 'numeric'
+                                                            })}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div className="flex items-center gap-2">
+                                                    <span className="text-green-600 font-medium">🕐</span>
+                                                    <div>
+                                                        <p className="text-xs text-gray-600">Departure</p>
+                                                        <p className="font-semibold text-gray-900">{route.schedule.departureTime}</p>
+                                                    </div>
+                                                </div>
+                                                <div className="flex items-center gap-2">
+                                                    <span className="text-orange-600 font-medium">🕐</span>
+                                                    <div>
+                                                        <p className="text-xs text-gray-600">Arrival</p>
+                                                        <p className="font-semibold text-gray-900">{route.schedule.arrivalTime}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )}
 
                                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                                         <div>
