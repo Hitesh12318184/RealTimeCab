@@ -18,7 +18,7 @@ export const SocketProvider = ({ children }) => {
 
     useEffect(() => {
         if (isAuthenticated && user) {
-            const SOCKET_URL = import.meta.env.VITE_SOCKET_URL || 'http://localhost:5000';
+            const SOCKET_URL = import.meta.env.VITE_SOCKET_URL || 'https://cabservice-yj4d.onrender.com';
             const newSocket = io(SOCKET_URL, {
                 transports: ['websocket'],
                 reconnection: true,

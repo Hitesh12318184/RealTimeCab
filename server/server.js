@@ -79,26 +79,7 @@ app.use('/api/bookings', bookingRoutes);
 app.use('/api/offers', offerRoutes);
 app.use('/api/admin', adminRoutes);
 
-// Serve frontend in production
-if (process.env.NODE_ENV === 'production') {
-    const path = require('path');
-
-    // Set static folder
-    app.use(express.static(path.join(__dirname, '../client/dist')));
-
-    app.get(/.*/, (req, res) => {
-        res.sendFile(path.resolve(__dirname, '../client', 'dist', 'index.html'));
-    });
-} else {
-    // Health check route for development
-    app.get('/health-dev', (req, res) => {
-        res.status(200).json({
-            success: true,
-            message: 'Server is running in development mode',
-            timestamp: new Date().toISOString()
-        });
-    });
-}
+// Removed static file serving for production because Render handles frontend independently
 
 // Error handling middleware (must be last)
 app.use(notFound);
